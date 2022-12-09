@@ -34,8 +34,10 @@ async function run() {
 
     // Check that no more than the specified number of files were changed
     const maxFilesChanged = core.getInput('maxFilesChanged')
-    if (maxFilesChanged && files.length > maxFilesChanged) {
-      core.setFailed("The PR shouldn not change more than " + maxFilesChanged + " file(s)");
+    if (typeof maxLinesChanged !== 'undefined') {
+      if (maxFilesChanged && files.length > maxFilesChanged) {
+        core.setFailed("The PR shouldn not change more than " + maxFilesChanged + " file(s)");
+      }
     }
 
     // Get changed chunks
@@ -56,8 +58,10 @@ async function run() {
 
     // Check that no more than the specified number of lines have changed
     const maxLinesChanged = +core.getInput('maxLinesChanged')
-    if (maxLinesChanged && (additions > maxLinesChanged)) {
-      core.setFailed("The PR shouldn not change more than " + maxLinesChanged + " lines(s) ");
+    if (typeof maxLinesChanged !== 'undefined') {
+      if (maxLinesChanged && (additions > maxLinesChanged)) {
+        core.setFailed("The PR shouldn not change more than " + maxLinesChanged + " lines(s) ");
+      }
     }
 
     // Check that the pull request diff constains the required string
