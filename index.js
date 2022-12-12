@@ -13,6 +13,8 @@ async function run() {
   const context = github.context;
   //const payload = ((context.eventName === 'push') ? context.payload.push : context.payload.pull_request);
   core.debug(context.eventName)
+  core.debug(context.head_ref)
+  core.debug(context)
 
 }
 
