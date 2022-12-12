@@ -13,6 +13,8 @@ async function run() {
     const context = github.context
 
     core.debug("Check body contains")
+    core.debug("-------")
+    core.debug(context.payload)
     // Check that the pull request description contains the required string
     const bodyContains = core.getInput('bodyContains')
     if (typeof bodyContains !== 'undefined') {
