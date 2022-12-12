@@ -13,7 +13,7 @@ async function run() {
     const context = github.context;
     //const payload = ((context.eventName === 'push') ? context.payload.push : context.payload.pull_request);
     core.setFailed("The Event" + context.eventName);
-      if (context.eventName === 'push') {
+      if (context.eventName !== 'push') {
 
       core.debug("Check body contains")
       // Check that the pull request description contains the required string
