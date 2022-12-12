@@ -12,7 +12,8 @@ async function run() {
     const octokit = github.getOctokit(token);
     const context = github.context;
     //const payload = ((context.eventName === 'push') ? context.payload.push : context.payload.pull_request);
-    core.debug(context.eventName)
+    core.debug(context.eventName);
+    return;
 
     core.debug("Check body contains")
     // Check that the pull request description contains the required string
