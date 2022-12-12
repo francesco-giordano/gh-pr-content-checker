@@ -111,9 +111,9 @@ async function run() {
         }
       }
     }
-  } catch (error) {
-    if (error instanceof Error) core.setFailed(error.message)
-  }
+  } //catch (error) {
+    //if (error instanceof Error) core.setFailed(error.message)
+  //}
 }
 
 run();
