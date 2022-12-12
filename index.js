@@ -6,14 +6,14 @@ const parse = require('parse-diff')
 // most @actions toolkit packages have async methods
 async function run() {
   try {
-    core.debug("Get github token")
+    core.debug("Get github token------")
     // get information on everything
     const token = core.getInput('github-token', { required: true })
     const octokit = github.getOctokit(token);
     const context = github.context;
     const payload = ((context.eventName === 'push') ? context.payload.push : context.payload.pull_request);
-    core.error("print");
-    core.error(payload);
+    core.debug("print");
+    core.debug(payload);
 
     core.debug("Check body contains")
     // Check that the pull request description contains the required string
