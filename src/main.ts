@@ -46,7 +46,7 @@ async function run() {
     const pullRequest = context.payload.pull_request;
 
     core.debug("Check skip labels")
-    const skipLabels = core.getInput("skipLabel");
+    const skipLabels = core.getInput("skipLabels");
     let skipLabelList = extractLabels(skipLabels);
     const labelNames = pullRequest.labels.map(l => l.name)
     if (!shouldEnforceCheck(labelNames, skipLabelList)) {
