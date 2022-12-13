@@ -2,9 +2,33 @@ const core = require('@actions/core');
 const github = require('@actions/github');
 const parse = require('parse-diff');
 
+function shouldEnforceCheck(labelNames, skipLabelList) {
+  return !labelNames.some(l => skipLabelList.includes(l))
+}
+
+function extractLabels(labelsString) {
+  // Parses a list of labels. Each label can be of any length and will either end with a comma or be the end of the string.
+  // Matches words (\w), whitespace characters (\s), dashes (-), plus signs (+), questions marks (\?), semi-colons (;), brackets (\[\]) and parenthesis (\(\))
+  // Each match may are may not have a trailing comma (,?). If one exists, it is removed before appending it to the list
+  const regex = new RegExp(/([\w\s-+\?;\[\]\(\)]+,?)/, 'g')
+  let labels: any[]
+  let groups: any
+  labels = []
+  do {
+      groups = regex.exec(labelsString)
+      if (groups) {
+          // Removes the trailing comma and removes all whitespace
+          let label = groups[0].replace(",", "").trim();
+          labels.push(label);
+      }
+  } while(groups)
+  return labels
+}
+
 async function run() {
   try {
     core.info("Checking the PR");
+
     core.debug("Get context");
     // get information on everything
     const token = core.getInput('github-token', { required: true });
@@ -18,17 +42,30 @@ async function run() {
       return
     }
 
+    core.debug("Get pull_request")
+    const pullRequest = context.payload.pull_request;
+
+    core.debug("Check skip labels")
+    const skipLabels = core.getInput("skipLabel");
+    let skipLabelList = extractLabels(skipLabels);
+    const labelNames = pullRequest.labels.map(l => l.name)
+    if (!shouldEnforceCheck(labelNames, skipLabelList)) {
+      core.info("Skipping check due to label: " + skipLabels);
+      return
+    }
+
+
     core.debug("Check body contains");
     // Check that the pull request description contains the required string
     const bodyContains = core.getInput('bodyContains');
-    if (bodyContains && !context.payload.pull_request.body.includes(bodyContains)) {
+    if (bodyContains && !pullRequest.body.includes(bodyContains)) {
       core.setFailed("The PR description should include " + bodyContains)
     }
 
     core.debug("Check body does not contain");
     // Check that the pull request description does not contain the forbidden string
     const bodyDoesNotContain = core.getInput('bodyDoesNotContain');
-    if (bodyDoesNotContain && context.payload.pull_request.body.includes(bodyDoesNotContain)) {
+    if (bodyDoesNotContain && pullRequest.body.includes(bodyDoesNotContain)) {
       core.setFailed("The PR description should not include " + bodyDoesNotContain);
     }
 
@@ -37,7 +74,7 @@ async function run() {
     const { data: prDiff } = await octokit.pulls.get({
       owner: context.repo.owner,
       repo: context.repo.repo,
-      pull_number: context.payload.pull_request.number,
+      pull_number: pullRequest.number,
       mediaType: {
         format: "diff",
       },

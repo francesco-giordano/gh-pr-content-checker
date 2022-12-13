@@ -41,7 +41,7 @@ npm install && npm run build && npm run package
 **Note**
 If you receive the error `ERR_OSSL_EVP_UNSUPPORTED` add this environment variable:
 ```bash
-NODE_OPTIONS=--openssl-legacy-provider
+export NODE_OPTIONS=--openssl-legacy-provider
 ```
 
 ## History
