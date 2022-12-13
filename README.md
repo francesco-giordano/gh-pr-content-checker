@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check PR
-      uses: francesco-giordano/gh-pr-content-checker@master
+      uses: francesco-giordano/gh-pr-content-checker@develop
       with:
         github-token: ${{github.token}}
         bodyContains: 'Add this'
@@ -30,10 +30,17 @@ jobs:
 
 An example is also provided in .github/workflows/ in this repository.
 
+# Run this action
+
+In order to be able to directly use the action, it needs to be compiled:
+
+```bash
+npm install && npm run build && npm run package 
+```
 
 ## History
 
-This is a customisation of [pablo-statsig/gh-pr-content-checker](https://github.com/pablo-statsig/gh-pr-content-checker/), adding label skip
+This is a customization of [pablo-statsig/gh-pr-content-checker](https://github.com/pablo-statsig/gh-pr-content-checker/), adding label skip
 
 * `v1`: Added logging and label to skip check
 
