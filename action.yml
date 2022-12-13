@@ -1,32 +1,51 @@
 name: 'GitHub PR Content Checker with regex'
 description: 'Checks PR body and diff for word occurrences'
-author: 'jsoares'
+author: 'francesco-giordano'
 branding:
   icon: 'git-pull-request'
   color: 'gray-dark'
 inputs:
   github-token:
-    description: 'Github token, added magically'
+    description: "The secret value from your GITHUB_TOKEN or another token to access the GitHub API. Defaults to the token at `github.token`"
+    required: true
+    default: ${{ github.token }}
   bodyContains:
     description: 'String that must be in the PR body'
+    required: false
   bodyDoesNotContain:
     description: 'String that must not be in the PR body'
+    required: false
   diffContains:
     description: 'String that must be in the PR diff'
+    required: false
   diffDoesNotContain:
     description: 'String that must not be in the PR diff'
+    required: false
   maxLinesChanged:
     description: 'Max number of lines changed per PR'
+    required: false
   maxFilesChanged:
     description: 'Max number of files changed per PR'
+    required: false
   diffDoesNotContainRegex:
     description: 'Regex match that should not be in the diff'
+    required: false
   diffContainsRegex:
     description: 'Regex match that should be in the diff'
+    required: false
+  skipLabels:
+    description: | 
+      "List of labels used to skip the check during a pull request. Each label name is comma separated and only one label needs to be 
+      present for skip the check.
 
-outputs:
-  diff:
-    description: "Lines added to the PR"
+      For example, if `label-1,label-2` was supplied as the `skipLabels`, `label-1` _or_ `label-2` would skip the enforcer. 
+
+      Each label is trimmed for leading and trailing spaces since GitHub labels do not allow for leading or trailing spaces. Thus, the following lists are equivalent:
+      * `label-1,label-2`
+      * `label-1 , label-2`
+      * `label-1  ,label-2`"
+    required: false
+    default: 'skip-security-exclusions-check'
 
 runs:
   using: 'node12'
