@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Check PR
-      uses: pablo-statsig/gh-pr-content-checker@master
+      uses: francesco-giordano/gh-pr-content-checker@master
       with:
         github-token: ${{github.token}}
         bodyContains: 'Add this'
@@ -33,20 +33,10 @@ An example is also provided in .github/workflows/ in this repository.
 
 ## History
 
-This is a customisation of [jsoares/gh-pr-content-checker](https://github.com/jsoares/gh-pr-content-checker/), adding regex
+This is a customisation of [pablo-statsig/gh-pr-content-checker](https://github.com/pablo-statsig/gh-pr-content-checker/), adding label skip
 
-* `v0`: Proof of concept, published to marketplace
-* `v1`: Adds several more checks
-* `v2`: Adds check for strings to avoid and creates issues for errors.
-
---forked--
-
-* `v3`: Adds diffDoesNotContain field, improves counting behaviour, update deps
-
---forked--
-
-* `v4`: Adds regex checking
+* `v1`: Added logging and label to skip check
 
 ## License
 
-This is a modification of [jsoares/gh-pr-content-checker](https://github.com/jsoares/gh-pr-content-checker/) and is released under the MIT license.
+This is a modification of [pablo-statsig/gh-pr-content-checker](https://github.com/pablo-statsig/gh-pr-content-checker/) and is released under the MIT license.
