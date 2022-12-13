@@ -10043,13 +10043,13 @@ function run() {
             // Check that the pull request diff contains the required regex
             const diffContainsRegex = core.getInput('diffContainsRegex');
             if (diffContainsRegex && !RegExp(diffContainsRegex).test(changes)) {
-                core.setFailed("The PR diff should include a string matching" + diffContainsRegex);
+                core.setFailed("The PR diff should include a string matching " + diffContainsRegex);
             }
             core.debug("Check diff does not contain regex");
             // Check that the pull request diff does not contain the forbidden regex
             const diffDoesNotContainRegex = core.getInput('diffDoesNotContainRegex');
             if (diffDoesNotContainRegex && RegExp(diffDoesNotContainRegex).test(changes)) {
-                core.setFailed("The PR diff should not include a string matching" + diffDoesNotContainRegex);
+                core.setFailed("The PR diff should not include a string matching " + diffDoesNotContainRegex);
             }
         }
         catch (error) {

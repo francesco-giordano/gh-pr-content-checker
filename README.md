@@ -38,6 +38,12 @@ In order to be able to directly use the action, it needs to be compiled:
 npm install && npm run build && npm run package 
 ```
 
+**Note**
+If you receive the error `ERR_OSSL_EVP_UNSUPPORTED` add this environment variable:
+```bash
+NODE_OPTIONS=--openssl-legacy-provider
+```
+
 ## History
 
 This is a customization of [pablo-statsig/gh-pr-content-checker](https://github.com/pablo-statsig/gh-pr-content-checker/), adding label skip
