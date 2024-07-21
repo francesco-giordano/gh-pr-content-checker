@@ -33,6 +33,9 @@ inputs:
   diffContainsRegex:
     description: 'Regex match that should be in the diff'
     required: false
+  pathDiff:
+    description: 'The path to consider for the diff'
+    required: false
   skipLabels:
     description: | 
       "List of labels used to skip the check during a pull request. Each label name is comma separated and only one label needs to be 

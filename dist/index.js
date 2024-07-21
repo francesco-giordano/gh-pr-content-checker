@@ -10032,6 +10032,7 @@ function run() {
                 },
             });
             const files = parse(prDiff);
+            core.debug(files);
             core.debug("Check max files changed");
             // Check that no more than the specified number of files were changed
             const maxFilesChanged = core.getInput('maxFilesChanged');
